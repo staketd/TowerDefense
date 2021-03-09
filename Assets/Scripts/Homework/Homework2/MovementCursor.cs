@@ -24,6 +24,9 @@ namespace Homework2 {
 
         private void Awake() {
             m_Camera = Camera.main;
+        }
+
+        private void OnValidate() {
             // Default plane scale
             float width = m_GridWidth * m_NodeSize;
             float height = m_GridHeight * m_NodeSize;

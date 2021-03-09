@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Start: {x: 0, y: 10, z: 0}
   m_MPosition: {x: 0, y: 0, z: 0}
   m_MMass: 10000000000000
-  m_Velocity: {x: -8, y: 0, z: 0}
+  m_Velocity: {x: -10, y: 0, z: 0}
 --- !u!23 &1269736627
 MeshRenderer:
   m_ObjectHideFlags: 0
