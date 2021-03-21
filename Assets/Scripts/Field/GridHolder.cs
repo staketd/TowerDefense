@@ -25,8 +25,18 @@ namespace Field {
 
         private Camera m_Camera;
 
-        private void OnValidate() {
+        public void OnValidate() {
+            
             m_Camera = Camera.main;
+            // Default plane scale
+            float width = m_GridWidth * m_NodeSize;
+            float height = m_GridHeight * m_NodeSize;
+            transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
+            m_Offset = transform.position - new Vector3(width * 0.5f, 0f, height * 0.5f);
+        }
+
+        public void CreateGrid() {
+            OnValidate();
             // Default plane scale
             float width = m_GridWidth * m_NodeSize;
             float height = m_GridHeight * m_NodeSize;
@@ -35,7 +45,7 @@ namespace Field {
             m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
         }
 
-        private void Update() {
+        public void RaycastInGrid() {
             if (m_Grid == null || m_Camera == null) {
                 return;
             }
@@ -45,6 +55,7 @@ namespace Field {
 
             if (Physics.Raycast(ray, out RaycastHit hit)) {
                 if (hit.transform != transform) {
+                    m_Grid.UnselectNode();
                     return;
                 }
 
@@ -56,11 +67,10 @@ namespace Field {
                 int z = (int) (difference.z / m_NodeSize);
 
                 Vector2Int coordinate = new Vector2Int(x, z);
-                Node node = m_Grid.GetNode(x, z);
                 
-                if (Input.GetMouseButtonDown(0) && Grid.TryOccupyNode(coordinate, !node.IsOccupied)) {
-                    m_Grid.UpdatePathFinding();
-                }
+                m_Grid.SelectCoordinate(coordinate);
+            } else {
+                m_Grid.UnselectNode();
             }
         }
 
