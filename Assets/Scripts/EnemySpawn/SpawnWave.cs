@@ -1,4 +1,4 @@
-using Resources;
+using Enemy;
 
 namespace EnemySpawn {
     

@@ -20,9 +20,9 @@ namespace Enemy {
 
         public void CreateMovementAgent(Grid grid) {
             if (Data.Asset.IsFlyingEnemy) {
-                m_MovementAgent = new FlyingMovementAgent(5f, transform, grid);
+                m_MovementAgent = new FlyingMovementAgent(5f, transform, grid, m_Data);
             } else {
-                m_MovementAgent = new GridMovementAgent(2f, transform, grid);
+                m_MovementAgent = new GridMovementAgent(2f, transform, grid, m_Data);
             }
         }
     }

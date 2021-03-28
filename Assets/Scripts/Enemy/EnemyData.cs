@@ -1,4 +1,3 @@
-using Resources;
 
 namespace Enemy {
     public class EnemyData {

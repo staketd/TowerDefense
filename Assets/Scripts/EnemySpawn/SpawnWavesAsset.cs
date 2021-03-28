@@ -1,4 +1,3 @@
-using Resources;
 using UnityEngine;
 
 namespace EnemySpawn {

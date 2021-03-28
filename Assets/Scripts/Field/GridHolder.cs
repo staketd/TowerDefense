@@ -26,7 +26,6 @@ namespace Field {
         private Camera m_Camera;
 
         public void OnValidate() {
-            
             m_Camera = Camera.main;
             // Default plane scale
             float width = m_GridWidth * m_NodeSize;
@@ -59,16 +58,7 @@ namespace Field {
                     return;
                 }
 
-                Vector3 hitPosition = hit.point;
-
-                Vector3 difference = hitPosition - m_Offset;
-
-                int x = (int) (difference.x / m_NodeSize);
-                int z = (int) (difference.z / m_NodeSize);
-
-                Vector2Int coordinate = new Vector2Int(x, z);
-                
-                m_Grid.SelectCoordinate(coordinate);
+                m_Grid.SelectCoordinate(m_Grid.GetNodeCoordinateAtPoint(hit.point));
             } else {
                 m_Grid.UnselectNode();
             }
@@ -108,42 +98,53 @@ namespace Field {
                 return;
             }
 
-            foreach (Node node in m_Grid.EnumerateAllNodes()) {
-                if (node.NextNode == null) {
-                    continue;
-                }
+            // foreach (Node node in m_Grid.EnumerateAllNodes()) {
+            //     if (node.NextNode == null) {
+            //         continue;
+            //     }
+            //
+            //     if (node.IsOccupied) {
+            //         Gizmos.color = Color.black;
+            //         Gizmos.DrawSphere(node.Position, 0.5f);
+            //         continue;
+            //     }
+            //
+            //     switch (node.Availability) {
+            //         case OccupationAvailability.CanOccupy:
+            //             Gizmos.color = Color.green;
+            //             Gizmos.DrawSphere(node.Position, 0.4f);
+            //             break;
+            //         case OccupationAvailability.CanNotOccupy:
+            //             Gizmos.color = Color.red;
+            //             Gizmos.DrawSphere(node.Position, 0.4f);
+            //             break;
+            //         case OccupationAvailability.Undefined:
+            //             Gizmos.color = Color.gray;
+            //             Gizmos.DrawSphere(node.Position, 0.4f);
+            //             break;
+            //         default:
+            //             throw new ArgumentOutOfRangeException();
+            //     }
+            //
+            //     Gizmos.color = Color.red;
+            //     Vector3 start = node.Position;
+            //     Vector3 end = node.NextNode.Position;
+            //     Vector3 dir = end - start;
+            //     start -= dir * 0.25f;
+            //     end -= dir * 0.75f;
+            //     Gizmos.DrawLine(start, end);
+            //     Gizmos.DrawSphere(end, 0.1f);
+            // }
 
-                if (node.IsOccupied) {
-                    Gizmos.color = Color.black;
-                    Gizmos.DrawSphere(node.Position, 0.5f);
-                    continue;
-                }
-
-                switch (node.Availability) {
-                    case OccupationAvailability.CanOccupy:
-                        Gizmos.color = Color.green;
-                        Gizmos.DrawSphere(node.Position, 0.4f);
-                        break;
-                    case OccupationAvailability.CanNotOccupy:
-                        Gizmos.color = Color.red;
-                        Gizmos.DrawSphere(node.Position, 0.4f);
-                        break;
-                    case OccupationAvailability.Undefined:
-                        Gizmos.color = Color.gray;
-                        Gizmos.DrawSphere(node.Position, 0.4f);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                Gizmos.color = Color.red;
-                Vector3 start = node.Position;
-                Vector3 end = node.NextNode.Position;
-                Vector3 dir = end - start;
-                start -= dir * 0.25f;
-                end -= dir * 0.75f;
-                Gizmos.DrawLine(start, end);
-                Gizmos.DrawSphere(end, 0.1f);
+            Node selectedNode = m_Grid.GetSelectedNode();
+            if (selectedNode == null) {
+                return;
+            }
+            Gizmos.DrawSphere(selectedNode.Position, 5f);
+            var nodesInRange = m_Grid.GetNodesInCircle(selectedNode.Position, 5f);
+            Gizmos.color = Color.blue;
+            foreach (Node node in nodesInRange) {
+                Gizmos.DrawSphere(node.Position, 0.2f);
             }
         }
     }

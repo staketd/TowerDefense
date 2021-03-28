@@ -1,4 +1,5 @@
 using Field;
+using Runtime;
 using UnityEngine;
 using Grid = Field.Grid;
 
@@ -12,16 +13,20 @@ namespace Enemy {
         private const float TOLERANCE = 0.1f;
 
         private Node m_TargetNode;
+        private Node m_PrevNode;
+        private float m_NodeSize;
+        private EnemyData m_Data;
 
-        public GridMovementAgent(float mSpeed, Transform mTransform, Grid grid) {
+        public GridMovementAgent(float mSpeed, Transform mTransform, Grid grid, EnemyData enemyData) {
             m_Speed = mSpeed;
             m_Transform = mTransform;
+            m_Data = enemyData;
+
+            m_NodeSize = Game.Player.Grid.NodeSize;
             
             SetTargetNode(grid.GetStartNode());
-        }
-
-        private void Start() {
-            m_Transform.position = m_TargetNode.Position;
+            m_PrevNode = m_TargetNode;
+            m_PrevNode.EnemyDatas.Add(m_Data);
         }
 
         public void TickMovement() {
@@ -35,7 +40,14 @@ namespace Enemy {
             dir.y = 0;
 
             float distance = dir.magnitude;
+
+            if (Grid.InsideOfNode(m_Transform.position, m_TargetNode, m_NodeSize) && !m_TargetNode.EnemyDatas.Contains(m_Data)) {
+                m_PrevNode.EnemyDatas.Remove(m_Data);
+                m_TargetNode.EnemyDatas.Add(m_Data);
+            }
+
             if (distance < TOLERANCE) {
+                m_PrevNode = m_TargetNode;
                 m_TargetNode = m_TargetNode.NextNode;
                 return;
             }
@@ -45,6 +57,7 @@ namespace Enemy {
             Vector3 delta = dir * (m_Speed * Time.deltaTime);
             m_Transform.Translate(delta);
         }
+
 
         private void SetTargetNode(Node node) {
             m_TargetNode = node;

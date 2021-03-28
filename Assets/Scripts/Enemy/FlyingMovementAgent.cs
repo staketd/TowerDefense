@@ -1,4 +1,5 @@
 using Field;
+using Runtime;
 using UnityEngine;
 using Grid = Field.Grid;
 
@@ -12,12 +13,16 @@ namespace Enemy {
         private const float TOLERANCE = 0.1f;
 
         private Node m_TargetNode;
-        
-        public FlyingMovementAgent(float mSpeed, Transform mTransform, Grid grid) {
+        private Node m_NowNode;
+        private EnemyData m_Data;
+
+        public FlyingMovementAgent(float mSpeed, Transform mTransform, Grid grid, EnemyData enemyData) {
             m_Speed = mSpeed;
             m_Transform = mTransform;
+            m_Data = enemyData;
             
             SetTargetNode(grid.GetTargetNode());
+            m_NowNode = grid.GetStartNode();
         }
 
         public void TickMovement() {
@@ -27,8 +32,16 @@ namespace Enemy {
 
             Vector3 target = m_TargetNode.Position;
 
-            Vector3 dir = target - m_Transform.position;
+            var position = m_Transform.position;
+            Vector3 dir = target - position;
             dir.y = 0;
+
+            Node nowNode = Game.Player.Grid.GetNodeAtPoint(position);
+            if (nowNode != m_NowNode) {
+                m_NowNode.EnemyDatas.Remove(m_Data);
+                nowNode.EnemyDatas.Add(m_Data);
+                m_NowNode = nowNode;
+            }
 
             float distance = dir.magnitude;
             if (distance < TOLERANCE) {
@@ -40,6 +53,10 @@ namespace Enemy {
 
             Vector3 delta = dir * (m_Speed * Time.deltaTime);
             m_Transform.Translate(delta);
+        }
+
+        public void AttachData(EnemyData enemyData) {
+            m_Data = enemyData;
         }
 
         private void SetTargetNode(Node node) {

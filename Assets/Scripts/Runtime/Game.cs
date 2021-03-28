@@ -1,5 +1,5 @@
 using System;
-using Resources;
+using Assets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
