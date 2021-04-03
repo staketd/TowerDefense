@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnWaves:
   - EnemyAsset: {fileID: 11400000, guid: 5cfddbc539afc014bb15c23e70d3c153, type: 2}
-    Count: 5
+    Count: 10
     TimeBetweenSpawns: 1
     TimeBeforeStartWave: 1
   - EnemyAsset: {fileID: 11400000, guid: b1b778231b4186947961b550fe2000b8, type: 2}
-    Count: 5
+    Count: 0
     TimeBetweenSpawns: 1
     TimeBeforeStartWave: 1

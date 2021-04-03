@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73bea93e23fe46d8a32b8e298e7fc85d, type: 3}
-  m_Name: Turret Market Asset
+  m_Script: {fileID: 11500000, guid: 520c9e7524844fad82145fccbd8cf650, type: 3}
+  m_Name: Bullet
   m_EditorClassIdentifier: 
-  TurretAssets:
-  - {fileID: 11400000, guid: bba69c0b74461e0479657760fe955cc1, type: 2}
+  m_BulletPrefab: {fileID: 361168055206552220, guid: 04014e924d6dbbc40babdb0488e228e8, type: 3}

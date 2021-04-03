@@ -140,8 +140,8 @@ namespace Field {
             if (selectedNode == null) {
                 return;
             }
-            Gizmos.DrawSphere(selectedNode.Position, 5f);
-            var nodesInRange = m_Grid.GetNodesInCircle(selectedNode.Position, 5f);
+            Gizmos.DrawSphere(selectedNode.Position, 10f);
+            var nodesInRange = m_Grid.GetNodesInCircle(selectedNode.Position, 10f);
             Gizmos.color = Color.blue;
             foreach (Node node in nodesInRange) {
                 Gizmos.DrawSphere(node.Position, 0.2f);

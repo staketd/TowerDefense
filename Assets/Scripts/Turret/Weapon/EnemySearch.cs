@@ -22,5 +22,14 @@ namespace Turret.Weapon {
             }
             return closestEnemy;
         }
+
+        public static List<EnemyData> GetEnemiesInNodes(List<Node> nodes) {
+            List<EnemyData> result = new List<EnemyData>();
+            foreach (Node node in nodes) {
+                result.AddRange(node.EnemyDatas);
+            }
+
+            return result;
+        }
     }
 }

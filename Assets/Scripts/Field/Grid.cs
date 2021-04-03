@@ -202,13 +202,13 @@ namespace Field {
         }
 
         public static bool InsideOfNode(Vector3 point, Node node, float nodeSize) {
-            Vector2 offset = (Vector2.left + Vector2.up) * nodeSize / 2;
+            Vector2 offset = (Vector2.left + Vector2.down) * nodeSize / 2;
             Vector2 projectedCenter = new Vector2(node.Position.x, node.Position.z);
             Vector2 ptA = projectedCenter + offset;
             Vector2 ptB = projectedCenter - offset;
-            Vector2 projectedPoint = new Vector2(point.x, point.y);
-            return projectedPoint.x >= ptB.x && projectedPoint.y >= ptB.y &&
-                   projectedPoint.x <= ptA.x && projectedPoint.y <= ptA.y;
+            Vector2 projectedPoint = new Vector2(point.x, point.z);
+            return projectedPoint.x <= ptB.x && projectedPoint.y <= ptB.y &&
+                   projectedPoint.x >= ptA.x && projectedPoint.y >= ptA.y;
         }
     }
 }

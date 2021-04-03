@@ -37,6 +37,7 @@ namespace TurretSpawn {
             TurretView view = Object.Instantiate(asset.ViewPrefab);
             TurretData data = new TurretData(asset, selectedNode);
             data.AttachView(view);
+            Game.Player.TurretSpawned(data);
             if (!m_Grid.TryOccupyNode(coordinate, true)) {
                 Debug.Log("Something has gone wrong");
             }

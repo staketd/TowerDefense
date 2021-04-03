@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8ab608c21d94b4fa6615b29fb8387e4, type: 3}
-  m_Name: Turret Asset
+  m_Name: Missile Turret
   m_EditorClassIdentifier: 
-  ViewPrefab: {fileID: 6458628456291731512, guid: 97b81298d59122c40bc557591ca48867, type: 3}
+  ViewPrefab: {fileID: 8586594228544838064, guid: 03cb6173cb842f14eb5a95e48c1c9b1a, type: 3}
+  WeaponAsset: {fileID: 11400000, guid: ddfc565e55b61684682889f659b635d6, type: 2}
