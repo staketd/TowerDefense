@@ -7,8 +7,17 @@ namespace Turret.Weapon.Projectile.Bullet {
     public class BulletProjectileAsset : ProjectileAssetBase {
         [SerializeField]
         private BulletProjectile m_BulletPrefab;
+
+        [SerializeField]
+        public float m_Damage;
+
+        [SerializeField]
+        public float m_Speed;
+        
         public override IProjectile CreateProjectile(Vector3 origin, Vector3 originForward, EnemyData data) {
-            return Instantiate(m_BulletPrefab, origin, Quaternion.LookRotation(originForward, Vector3.up));
+            BulletProjectile projectile = Instantiate(m_BulletPrefab, origin, Quaternion.LookRotation(originForward, Vector3.up));
+            projectile.SetAsset(this);
+            return projectile;
         }
     }
 }

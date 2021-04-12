@@ -23,6 +23,7 @@ namespace Enemy {
             
             SetTargetNode(grid.GetTargetNode());
             m_NowNode = grid.GetStartNode();
+            m_Data.AttachMovementAgent(this);
         }
 
         public void TickMovement() {
@@ -61,6 +62,10 @@ namespace Enemy {
 
         private void SetTargetNode(Node node) {
             m_TargetNode = node;
+        }
+
+        public void Die() {
+            m_NowNode?.EnemyDatas.Remove(m_Data);
         }
     }
 }

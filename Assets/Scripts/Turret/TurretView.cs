@@ -8,8 +8,12 @@ namespace Turret {
         [SerializeField]
         private Transform m_Tower;
 
+        [SerializeField]
+        private Animator m_Animator;
+
         public Transform ProjectileOrigin => m_ProjectileOrigin;
         private TurretData m_Data;
+        private static readonly int ShotAnimationIndex = Animator.StringToHash("Shot");
 
         public TurretData Data => m_Data;
         public void AttachData(TurretData turretData) {
@@ -20,6 +24,10 @@ namespace Turret {
         public void TowerLookAt(Vector3 point) {
             point.y = m_Tower.position.y;
             m_Tower.LookAt(point);
+        }
+
+        public void AnimateShot() {
+            m_Animator.SetTrigger(ShotAnimationIndex);
         }
     }
 }

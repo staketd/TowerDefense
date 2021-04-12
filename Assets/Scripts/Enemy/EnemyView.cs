@@ -9,6 +9,12 @@ namespace Enemy {
         [SerializeField]
         private float m_YCoordinate;
 
+        [SerializeField]
+        private Animator m_Animator;
+
+        private static readonly int DieAnimatorIndex = Animator.StringToHash("Die");
+        private static readonly int NotDeadAnimatorIndex = Animator.StringToHash("NotDead");
+
         public float YCoordinate => m_YCoordinate;
 
         public EnemyData Data => m_Data;
@@ -20,10 +26,15 @@ namespace Enemy {
 
         public void CreateMovementAgent(Grid grid) {
             if (Data.Asset.IsFlyingEnemy) {
-                m_MovementAgent = new FlyingMovementAgent(5f, transform, grid, m_Data);
+                m_MovementAgent = new FlyingMovementAgent(m_Data.Asset.Speed, transform, grid, m_Data);
             } else {
-                m_MovementAgent = new GridMovementAgent(2f, transform, grid, m_Data);
+                m_MovementAgent = new GridMovementAgent(m_Data.Asset.Speed, transform, grid, m_Data);
             }
+        }
+
+        public void AnimateDeath() {
+            m_Animator.SetTrigger(DieAnimatorIndex);
+            m_Animator.SetBool(NotDeadAnimatorIndex, false);
         }
     }
 }

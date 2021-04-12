@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Turret.Weapon.Projectile.Bullet {
     public class BulletProjectile : MonoBehaviour, IProjectile {
-        private float m_Speed = 10f;
-        private int m_Damage = 5;
+        private float m_Speed;
+        private float m_Damage;
         private bool m_DidHit = false;
         private EnemyData m_HitEnemy = null;
         public void TickApproaching() {
@@ -30,6 +30,11 @@ namespace Turret.Weapon.Projectile.Bullet {
                 m_HitEnemy.ReceiveDamage(m_Damage);
             }
             Destroy(gameObject);
+        }
+
+        public void SetAsset(BulletProjectileAsset bulletProjectileAsset) {
+            m_Speed = bulletProjectileAsset.m_Speed;
+            m_Damage = bulletProjectileAsset.m_Damage;
         }
     }
 }

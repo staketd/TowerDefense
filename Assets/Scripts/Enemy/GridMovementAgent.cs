@@ -8,6 +8,8 @@ namespace Enemy {
         [SerializeField] 
         private float m_Speed;
 
+        private bool m_Dead = false;
+
         private Transform m_Transform;
 
         private const float TOLERANCE = 0.1f;
@@ -27,10 +29,11 @@ namespace Enemy {
             SetTargetNode(grid.GetStartNode());
             m_PrevNode = m_TargetNode;
             m_PrevNode.EnemyDatas.Add(m_Data);
+            m_Data.AttachMovementAgent(this);
         }
 
         public void TickMovement() {
-            if (m_TargetNode == null) {
+            if (m_TargetNode == null || m_Dead) {
                 return;
             }
 
@@ -61,6 +64,12 @@ namespace Enemy {
 
         private void SetTargetNode(Node node) {
             m_TargetNode = node;
+        }
+
+        public void Die() {
+            m_Dead = true;
+            m_TargetNode?.EnemyDatas.Remove(m_Data);
+            m_PrevNode?.EnemyDatas.Remove(m_Data);
         }
     }
 }

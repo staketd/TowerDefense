@@ -14,8 +14,8 @@ namespace Turret.Weapon.Projectile.Missile {
         private bool m_DidHit = false;
         private Vector3 m_ExplosionCenter;
         public void TickApproaching() {
-            Vector3 dir = m_Target.View.transform.position - transform.position;
-            transform.Translate(dir.normalized * (m_Speed * Time.deltaTime), Space.World);
+            transform.Translate(transform.up.normalized * (m_Speed * Time.deltaTime), Space.World);
+            transform.LookAt(m_Target.View.transform, Vector3.forward);
         }
 
         private void OnTriggerEnter(Collider other) {
@@ -24,7 +24,6 @@ namespace Turret.Weapon.Projectile.Missile {
             if (enemyView == null) return;
             m_DidHit = true;
             m_ExplosionCenter = transform.position;
-
         }
 
         public bool DidHit() {
@@ -46,6 +45,12 @@ namespace Turret.Weapon.Projectile.Missile {
 
         public void SetTarget(EnemyData target) {
             m_Target = target;
+        }
+
+        public void SetAsset(MissileProjectileAsset missileProjectileAsset) {
+            m_Damage = missileProjectileAsset.m_Damage;
+            m_Speed = missileProjectileAsset.m_Speed;
+            m_ExplosionRadius = missileProjectileAsset.m_ExplosionRadius;
         }
     }
 }
