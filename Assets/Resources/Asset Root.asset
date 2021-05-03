@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Levels:
   - {fileID: 11400000, guid: c2e179cb07974fc4d854cd91ef9b5ca8, type: 2}
+  UIScene: {fileID: 102900000, guid: af9cc3405020efe4989accfc7540ffbe, type: 3}

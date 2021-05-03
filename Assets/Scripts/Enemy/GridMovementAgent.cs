@@ -71,5 +71,9 @@ namespace Enemy {
             m_TargetNode?.EnemyDatas.Remove(m_Data);
             m_PrevNode?.EnemyDatas.Remove(m_Data);
         }
+
+        public Node GetCurrentNode() {
+            return Game.Player.Grid.GetNodeAtPoint(m_Transform.position);
+        }
     }
 }

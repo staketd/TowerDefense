@@ -1,5 +1,6 @@
 using Enemy;
 using UnityEngine;
+using Utils.Pooling;
 
 namespace Turret.Weapon.Projectile.Bullet {
     
@@ -15,7 +16,7 @@ namespace Turret.Weapon.Projectile.Bullet {
         public float m_Speed;
         
         public override IProjectile CreateProjectile(Vector3 origin, Vector3 originForward, EnemyData data) {
-            BulletProjectile projectile = Instantiate(m_BulletPrefab, origin, Quaternion.LookRotation(originForward, Vector3.up));
+            BulletProjectile projectile = GameObjectPool.InstantiatePooled(m_BulletPrefab, origin, Quaternion.LookRotation(originForward, Vector3.up));
             projectile.SetAsset(this);
             return projectile;
         }

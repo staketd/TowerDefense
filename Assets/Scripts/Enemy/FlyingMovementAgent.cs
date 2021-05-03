@@ -13,7 +13,7 @@ namespace Enemy {
         private const float TOLERANCE = 0.1f;
 
         private Node m_TargetNode;
-        private Node m_NowNode;
+        private Node m_CurrentNode;
         private EnemyData m_Data;
 
         public FlyingMovementAgent(float mSpeed, Transform mTransform, Grid grid, EnemyData enemyData) {
@@ -22,7 +22,7 @@ namespace Enemy {
             m_Data = enemyData;
             
             SetTargetNode(grid.GetTargetNode());
-            m_NowNode = grid.GetStartNode();
+            m_CurrentNode = grid.GetStartNode();
             m_Data.AttachMovementAgent(this);
         }
 
@@ -38,10 +38,10 @@ namespace Enemy {
             dir.y = 0;
 
             Node nowNode = Game.Player.Grid.GetNodeAtPoint(position);
-            if (nowNode != m_NowNode) {
-                m_NowNode.EnemyDatas.Remove(m_Data);
+            if (nowNode != m_CurrentNode) {
+                m_CurrentNode.EnemyDatas.Remove(m_Data);
                 nowNode.EnemyDatas.Add(m_Data);
-                m_NowNode = nowNode;
+                m_CurrentNode = nowNode;
             }
 
             float distance = dir.magnitude;
@@ -65,7 +65,11 @@ namespace Enemy {
         }
 
         public void Die() {
-            m_NowNode?.EnemyDatas.Remove(m_Data);
+            m_CurrentNode?.EnemyDatas.Remove(m_Data);
+        }
+
+        public Node GetCurrentNode() {
+            return m_CurrentNode;
         }
     }
 }

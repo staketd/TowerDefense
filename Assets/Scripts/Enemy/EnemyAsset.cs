@@ -7,5 +7,7 @@ namespace Enemy {
         public float StartHealth;
         public bool IsFlyingEnemy;
         public float Speed;
+        public int Damage;
+        public int Bounty;
     }
 }

@@ -1,8 +1,12 @@
+using UI.InGame.Overtips;
 using UnityEngine;
 using Grid = Field.Grid;
 
 namespace Enemy {
     public class EnemyView : MonoBehaviour {
+        [SerializeField]
+        private EnemyOvertip m_Overtip;
+        
         private EnemyData m_Data;
         private IMovementAgent m_MovementAgent;
 
@@ -18,10 +22,11 @@ namespace Enemy {
         public float YCoordinate => m_YCoordinate;
 
         public EnemyData Data => m_Data;
-
+ 
         public IMovementAgent MovementAgent => m_MovementAgent;
         public void AttachData(EnemyData data) {
             m_Data = data;
+            m_Overtip.SetData(data);
         }
 
         public void CreateMovementAgent(Grid grid) {
@@ -35,6 +40,14 @@ namespace Enemy {
         public void AnimateDeath() {
             m_Animator.SetTrigger(DieAnimatorIndex);
             m_Animator.SetBool(NotDeadAnimatorIndex, false);
+        }
+
+        public void Die() {
+            Destroy(gameObject, 3f);
+        }
+
+        public void Reach() {
+            Destroy(gameObject, 0.1f);
         }
     }
 }

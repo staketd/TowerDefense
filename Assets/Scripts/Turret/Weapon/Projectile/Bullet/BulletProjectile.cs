@@ -1,12 +1,19 @@
 using Enemy;
 using UnityEngine;
+using Utils.Pooling;
 
 namespace Turret.Weapon.Projectile.Bullet {
-    public class BulletProjectile : MonoBehaviour, IProjectile {
+    public class BulletProjectile : PooledMonoBehaviour, IProjectile {
         private float m_Speed;
         private float m_Damage;
         private bool m_DidHit = false;
         private EnemyData m_HitEnemy = null;
+
+        public override void AwakePooled() {
+            m_DidHit = false;
+            m_HitEnemy = null;
+        }
+
         public void TickApproaching() {
             transform.Translate(transform.forward * (m_Speed * Time.deltaTime), Space.World);            
         }
@@ -29,7 +36,7 @@ namespace Turret.Weapon.Projectile.Bullet {
             if (m_HitEnemy != null) {
                 m_HitEnemy.ReceiveDamage(m_Damage);
             }
-            Destroy(gameObject);
+            GameObjectPool.ReturnObjectToPool(this);
         }
 
         public void SetAsset(BulletProjectileAsset bulletProjectileAsset) {

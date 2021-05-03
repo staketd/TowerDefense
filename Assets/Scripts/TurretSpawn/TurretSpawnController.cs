@@ -30,7 +30,14 @@ namespace TurretSpawn {
             if (selectedNode.IsOccupied || !m_Grid.CanOccupyNode(selectedNodeCoordinate)) {
                 return;
             }
-            SpawnTurret(m_Market.ChosenTurret, selectedNodeCoordinate, selectedNode);
+
+            TurretAsset asset = m_Market.ChosenTurret;
+            if (asset != null) {
+                m_Market.BuyTurret(asset);
+                SpawnTurret(asset, selectedNodeCoordinate, selectedNode);
+            } else {
+                Debug.Log("Not enough money!");
+            }
         }
 
         private void SpawnTurret(TurretAsset asset, Vector2Int coordinate, Node selectedNode) {
